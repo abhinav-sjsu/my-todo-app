@@ -17,9 +17,8 @@ function ToDoList() {
     }
 
     function deleteTask(index){
-        const updatedTasks = tasks.filter((_,i) => i !== index);
+        const updatedTasks = tasks.filter((element,i) => i !== index);
         setTasks(updatedTasks);
-
     }
 
     function moveTaskUp(index){
@@ -27,15 +26,15 @@ function ToDoList() {
             const updatedTasks = [...tasks];
             [updatedTasks[index], updatedTasks[index - 1]] = 
             [updatedTasks[index-1], updatedTasks[index]];
-            setTasks();
+            setTasks(updatedTasks);
         }
-
     }
 
     function moveTaskDown(index){
         if(index < tasks.length - 1){
             const updatedTasks = [...tasks];
-            [updatedTasks[index], updatedTasks[index - 1]] = [updatedTasks[index-1], updatedTasks[index]];
+            [updatedTasks[index], updatedTasks[index + 1]] = 
+                [updatedTasks[index + 1], updatedTasks[index]];
             setTasks(updatedTasks);
         }
     }
@@ -45,36 +44,42 @@ function ToDoList() {
             
             <h1>To-Do-List</h1>
             <div>
-                <input type="text" placeholder="Enter a task.." value={newTask} onChange={handleInputChange}></input>
-                <button className="add-button" onClick={addTask}>Add</button>
+                <input 
+                    type="text" 
+                    placeholder="Enter a task..." 
+                    value={newTask} 
+                    onChange={handleInputChange}/>
+                <button 
+                    className="add-button" 
+                    onClick={addTask}>
+                    Add
+                </button>
             </div>
 
             <ol>
-                {tasks.map((task,index) => <li key={index}>
-                    <span className="text">{task}</span>
-                    <button 
-                        className="delete-button" 
-                        onclick={() => deleteTask(index)}>
-                        Delete
-                    </button>
-                    <button 
-                        className="move-button" 
-                        onclick={() => moveTaskUp(index)}>
-                        UP
-                    </button>
-                    <button 
-                        className="move-button" 
-                        onclick={() => moveTaskDown(index)}>
-                        DOWN
-                    </button>
-                </li>
-            )}
+                {tasks.map((task,index) => 
+                    <li key={index}>
+                        <span className="text">{task}</span>
+                        <button 
+                            className="delete-button" 
+                            onclick={() => deleteTask(index)}>
+                            Delete
+                        </button>
+                        <button 
+                            className="move-button" 
+                            onclick={() => moveTaskUp(index)}>
+                            UP
+                        </button>
+                        <button 
+                            className="move-button" 
+                            onclick={() => moveTaskDown(index)}>
+                            DOWN
+                        </button>
+                    </li>
+                )}
             </ol>
 
-        </div>
-
-    
-    )
+        </div>);
 
 }
 
